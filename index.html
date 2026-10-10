@@ -692,12 +692,16 @@
     });
   }
 
-  // 平滑滚动
+  // 平滑滚动（window 滚动，兼容 .phone 的 overflow:hidden）
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', (e) => {
       const id = a.getAttribute('href').slice(1);
       const target = document.getElementById(id);
-      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      if (target) {
+        e.preventDefault();
+        const top = target.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({ top: top - 12, behavior: 'smooth' });
+      }
     });
   });
 
