@@ -485,7 +485,7 @@
       <div class="gallery-hint">向左滑动查看更多图片</div>
     </div>
 
-    <a href="#story" class="hero-cta" data-editable>点击查看更多</a>
+    <a href="#story" class="hero-cta" data-editable onclick="scrollToSection('story');return false;">点击查看更多</a>
 
   </div>
 
@@ -652,6 +652,14 @@
 </div>
 
 <script>
+  // 全局滚动函数（内联 onclick 调用，最可靠）
+  function scrollToSection(id) {
+    var target = document.getElementById(id);
+    if (target) {
+      var top = target.getBoundingClientRect().top + (window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0);
+      window.scrollTo({ top: top - 12, behavior: 'smooth' });
+    }
+  }
   // 滚动渐显（先标记为动画状态，再观察；JS失败时内容仍可见）
   document.querySelectorAll('.reveal').forEach(el => el.classList.add('anim-ready'));
   const observer = new IntersectionObserver((entries) => {
